@@ -95,6 +95,7 @@ void down()
 }
 int main()
 {
+	system("MODE con cols=21 lines=11");
 	f = ch;//将初始的移动方向赋值给f
 	for (int i = 0; i < 10; i++) //将字符数组全部以'-'填充，进行初始化
 	{
