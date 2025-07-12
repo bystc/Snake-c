@@ -4,30 +4,30 @@
 #include<conio.h>
 #include<time.h>
 char x[10][20];
-int H[20];
-int Z[20];
-int h, v;//·Ö±ğ´ú±íºá×İ×ø±ê
+int ROW[20];//æ¨ªåæ ‡
+int COL[20];//çºµåæ ‡
+int food_row, food_col;//åˆ†åˆ«ä»£è¡¨æ¨ªçºµåæ ‡
 char ch = 'd';
 int len = 3;
 char f;
-void getFood()//Ê³Îï
+void getFood()//é£Ÿç‰©
 {
-	h = rand() % 10;
-	v = rand() % 20;
-	if (x[h][v] == 1)
+	food_row = rand() % 10;
+	food_col = rand() % 20;
+	if (x[food_row][food_col] == 79)
 	{
 		getFood();
 	}
 	else
-		x[h][v] = 3;//ĞÄĞÎASCIIÂëÎª3
+		x[food_row][food_col] = 42;
 }
 void print()
 {
-	for (int i = 0; i <len; i++)//½«Êı×éÖĞ¼ÇÂ¼µÄÉßÉí×ø±êÈ«²¿Ìî³äÎªĞ¦Á³£¬ÆäASCIIÂëÎª1£»
+	for (int i = 0; i < len; i++)//å°†æ•°ç»„ä¸­è®°å½•çš„è›‡èº«åæ ‡å…¨éƒ¨å¡«å……ä¸ºç¬‘è„¸ï¼Œå…¶ASCIIç ä¸º1ï¼›
 	{
-		x[H[i]][Z[i]] = 1;
+		x[ROW[i]][COL[i]] = 79;
 	}
-	for (int i = 0; i < 10; i++)//ÓÃ±éÀúµÄĞÎÊ½»æÖÆ
+	for (int i = 0; i < 10; i++)//ç”¨éå†çš„å½¢å¼ç»˜åˆ¶
 	{
 		for (int j = 0; j < 20; j++)
 		{
@@ -35,156 +35,167 @@ void print()
 		}
 		printf("\n");
 	}
-	Sleep(500);//ĞİÃß0.5Ãë Ïàµ±ÓÚÉß0.5Ãë¶¯Ò»ÏÂ
-	system("cls");//ÇåÆÁº¯Êı¡£¡£ÒÔ±ã½«ÉßÉíÖØĞÂ»æÖÆ
+	Sleep(500);//ä¼‘çœ 0.5ç§’ ç›¸å½“äºè›‡0.5ç§’åŠ¨ä¸€ä¸‹
+	system("cls");//æ¸…å±å‡½æ•°ã€‚ã€‚ä»¥ä¾¿å°†è›‡èº«é‡æ–°ç»˜åˆ¶
 }
-void getkey()//ÅĞ¶ÏÊÇ·ñ°´ÏÂ¼üÅÌ
+void getkey()//åˆ¤æ–­æ˜¯å¦æŒ‰ä¸‹é”®ç›˜
 {
-	if (_kbhit())//Èç¹û°´ÏÂ¼üÅÌ£¬¾Í»áÖ´ĞĞÒÔÏÂÓï¾ä
+	if (_kbhit())//å¦‚æœæŒ‰ä¸‹é”®ç›˜ï¼Œå°±ä¼šæ‰§è¡Œä»¥ä¸‹è¯­å¥
 	{
-		ch = _getch();//»ñÈ¡¼üÅÌÖµ
-		if (ch == f)//Èç¹ûÕâ´Î°´¼üºÍÏÖÔÚ×ßµÄ·½ÏòÒ»ÖÂÔòÎªÎŞĞ§°´¼ü£¬ÖØĞÂÀ´»ñÈ¡°´ÏÂµÄ¼üÅÌÖµ
+		ch = _getch();//è·å–é”®ç›˜å€¼
+		if (ch == f)//å¦‚æœè¿™æ¬¡æŒ‰é”®å’Œç°åœ¨èµ°çš„æ–¹å‘ä¸€è‡´åˆ™ä¸ºæ— æ•ˆæŒ‰é”®ï¼Œé‡æ–°æ¥è·å–æŒ‰ä¸‹çš„é”®ç›˜å€¼
 		{
 			getkey();
 		}
-		else if ((ch == 100 && f != 97) || ch == 119 && f != 115 || ch == 97 && f != 100 || ch == 115 && f != 119) //¼´À´ÅĞ¶ÏÆäËûÎŞĞ§°´¼ü£¨¼´³¯×ó×ßÊ±²»ÄÜÈÃÆä³¯ÓÒ×ßµÈµÈ£©
-			f = ch;//°´¼üÓĞĞ§Ê±½«ch¸³ÖµÎªf
+		else if ((ch == 100 && f != 97) || ch == 119 && f != 115 || ch == 97 && f != 100 || ch == 115 && f != 119) //å³æ¥åˆ¤æ–­å…¶ä»–æ— æ•ˆæŒ‰é”®ï¼ˆå³æœå·¦èµ°æ—¶ä¸èƒ½è®©å…¶æœå³èµ°ç­‰ç­‰ï¼‰
+			f = ch;//æŒ‰é”®æœ‰æ•ˆæ—¶å°†chèµ‹å€¼ä¸ºf
 		else
-			getkey();//°´¼üÎŞĞ§Ê±ÖØĞÂ²¶»ñ¼üÅÌ
+			getkey();//æŒ‰é”®æ— æ•ˆæ—¶é‡æ–°æ•è·é”®ç›˜
 	}
 }
 void left()
 {
-	x[H[0]][Z[0]] = '-';
-	for (int i = 0; i <len - 1; i++)//ÉßÉíÈ«²¿Ç°½øÒ»¸ñ
+	x[ROW[0]][COL[0]] = '-';
+	for (int i = 0; i < len - 1; i++)//è›‡èº«å…¨éƒ¨å‰è¿›ä¸€æ ¼
 	{
-		Z[i] = Z[i + 1];
-		H[i] = H[i + 1];
+		COL[i] = COL[i + 1];
+		ROW[i] = ROW[i + 1];
 	}
-	Z[len-1]--;
+	COL[len - 1]--;
 }
 void right()
 {
-	x[H[0]][Z[0]] = '-';
-	for (int i = 0; i <len - 1; i++)//ÉßÉíÈ«²¿Ç°½øÒ»¸ñ
+	x[ROW[0]][COL[0]] = '-';
+	for (int i = 0; i < len - 1; i++)//è›‡èº«å…¨éƒ¨å‰è¿›ä¸€æ ¼
 	{
-		Z[i] = Z[i + 1];
-		H[i] = H[i + 1];
+		COL[i] = COL[i + 1];
+		ROW[i] = ROW[i + 1];
 	}
-	Z[len-1]++;
+	COL[len - 1]++;
 }
 void up()
 {
-	x[H[0]][Z[0]] = '-';
-	for (int i = 0; i <len-1; i++)//ÉßÉíÈ«²¿Ç°½øÒ»¸ñ
+	x[ROW[0]][COL[0]] = '-';
+	for (int i = 0; i < len - 1; i++)//è›‡èº«å…¨éƒ¨å‰è¿›ä¸€æ ¼
 	{
-		Z[i] = Z[i + 1];
-		H[i] = H[i + 1];
+		COL[i] = COL[i + 1];
+		ROW[i] = ROW[i + 1];
 	}
-	H[len-1]--;
+	ROW[len - 1]--;
 }
 void down()
 {
-	x[H[0]][Z[0]] = '-';
-	for (int i = 0; i <len - 1; i++)//ÉßÉíÈ«²¿Ç°½øÒ»¸ñ
+	x[ROW[0]][COL[0]] = '-';
+	for (int i = 0; i < len - 1; i++)//è›‡èº«å…¨éƒ¨å‰è¿›ä¸€æ ¼
 	{
-		Z[i] = Z[i + 1];
-		H[i] = H[i + 1];
+		COL[i] = COL[i + 1];
+		ROW[i] = ROW[i + 1];
 	}
-	H[len-1]++;
+	ROW[len - 1]++;
+}
+bool judge() {
+	for (int i = 0;i < len - 1;i++) {
+		if (ROW[len - 1] == ROW[i] && COL[len - 1] == COL[i]) {
+			return false;
+		}
+	}
+	return true;
 }
 int main()
 {
-	f = ch;//½«³õÊ¼µÄÒÆ¶¯·½Ïò¸³Öµ¸øf
-	for (int i = 0; i < 10; i++) //½«×Ö·ûÊı×éÈ«²¿ÒÔ'-'Ìî³ä£¬½øĞĞ³õÊ¼»¯
+	f = ch;//å°†åˆå§‹çš„ç§»åŠ¨æ–¹å‘èµ‹å€¼ç»™f
+	for (int i = 0; i < 10; i++) //å°†å­—ç¬¦æ•°ç»„å…¨éƒ¨ä»¥'-'å¡«å……ï¼Œè¿›è¡Œåˆå§‹åŒ–
 	{
 		for (int j = 0; j < 20; j++)
 		{
 			x[i][j] = '-';
 		}
 	}
-	for (int i = 0; i <10; i++)//½«´¢´æ×ø±êµÄÊı×éÈ«²¿¹éÁã
+	for (int i = 0; i < 10; i++)//å°†å‚¨å­˜åæ ‡çš„æ•°ç»„å…¨éƒ¨å½’é›¶
 	{
-		Z[i] = 0;
-		H[i] = 0;
+		COL[i] = 0;
+		ROW[i] = 0;
 	}
-	for (int i = 0; i <len; i++)//¼ÇÂ¼Ç°3¸öÉßÉí×ø±ê
-		Z[i] = i;
+	for (int i = 0; i < len; i++)//è®°å½•å‰3ä¸ªè›‡èº«åæ ‡
+		ROW[i] = i;
 	getFood();
-	while (len<=19)//ÉèÖÃÉßµÄ×î´ó³¤¶ÈÀ´Ó®µÃÓÎÏ·
+	while (len <= 19)//è®¾ç½®è›‡çš„æœ€å¤§é•¿åº¦æ¥èµ¢å¾—æ¸¸æˆ
 	{
 		getkey();
-		if (x[h][v]!=3)//Ê³ÎïÃ»ÓĞÁË²Å»ñÈ¡Ê³Îï
+		if (x[food_row][food_col] != 42)//é£Ÿç‰©æ²¡æœ‰äº†æ‰è·å–é£Ÿç‰©
 		{
-          getFood();
+			getFood();
 		}
 		switch (f)
 		{
 		case 'w':
-			  if(H[len-1]-1<0)
-			 {
-			  printf("Åöµ½ÉÏÇ½ÁË\n");
-		      return 0;
-             }
-			else if (H[len-1]-1==h&&Z[len-1]==v)//ÅĞ¶ÏÉßÒª×ßµÄÏÂ¸öµãÊÇ·ñÊÇÊ³ÎïµÄµã
-			 {
-				 H[len]=h;
-				 Z[len]=v;
-				 len++;
-				 break;
-			 }
+			if (ROW[len - 1] - 1 < 0)
+			{
+				printf("ç¢°åˆ°ä¸Šå¢™äº†\n");
+				return 0;
+			}
+			else if (ROW[len - 1] - 1 == food_row && COL[len - 1] == food_col)//åˆ¤æ–­è›‡è¦èµ°çš„ä¸‹ä¸ªç‚¹æ˜¯å¦æ˜¯é£Ÿç‰©çš„ç‚¹
+			{
+				ROW[len] = food_row;
+				COL[len] = food_col;
+				len++;
+				break;
+			}
 			up();
 			break;
 		case 'a':
-			if(Z[len-1]-1<0)
+			if (COL[len - 1] - 1 < 0)
 			{
-			printf("Åöµ½×óÇ½ÁË\n");
-		    return 0;
+				printf("ç¢°åˆ°å·¦å¢™äº†\n");
+				return 0;
 			}
-            else if (H[len-1]==h&&Z[len-1]-1==v)
-			 {
-				 H[len]=h;
-				 Z[len]=v;
-				 len++;
-				 break;
-			 }
+			else if (ROW[len - 1] == food_row && COL[len - 1] - 1 == food_col)
+			{
+				ROW[len] = food_row;
+				COL[len] = food_col;
+				len++;
+				break;
+			}
 			left();
 			break;
 		case 's':
-			if(H[len-1]+1>=10)
+			if (ROW[len - 1] + 1 >= 10)
 			{
-			printf("Åöµ½ÏÂÇ½ÁË\n");
-		    return 0;
+				printf("ç¢°åˆ°ä¸‹å¢™äº†\n");
+				return 0;
 			}
-			if (H[len-1]+1==h&&Z[len-1]==v)
-			 {
-				 H[len]=h;
-				 Z[len]=v;
-				 len++;
-				 break;
-			 }
+			if (ROW[len - 1] + 1 == food_row && COL[len - 1] == food_col)
+			{
+				ROW[len] = food_row;
+				COL[len] = food_col;
+				len++;
+				break;
+			}
 			down();
 			break;
 		case 'd':
-			if(Z[len-1]+1>=20)
+			if (COL[len - 1] + 1 >= 20)
 			{
-			printf("Åöµ½ÓÒÇ½ÁË\n");
-		    return 0;
+				printf("ç¢°åˆ°å³å¢™äº†\n");
+				return 0;
 			}
-			if (H[len-1]==h&&Z[len-1]+1==v)
-			 {
-				 H[len]=h;
-				 Z[len]=v;
-				 len++;
-				 break;
-			 }
+			if (ROW[len - 1] == food_row && COL[len - 1] + 1 == food_col)
+			{
+				ROW[len] = food_row;
+				COL[len] = food_col;
+				len++;
+				break;
+			}
 			right();
 			break;
 		}
+		if (!judge()) {
+			printf("ä½ åƒåˆ°è‡ªå·±äº†\n");
+			return 0;
+		}
 		print();
 	}
-    printf("You win!\n");
+	printf("You win!\n");
 	system("pause");
 	return 0;
 }
-
